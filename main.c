@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include "terminal.h"
+#include "nanoLike.h"
 
 int main(){
 	
