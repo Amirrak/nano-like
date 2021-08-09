@@ -1,5 +1,5 @@
-#ifndef TERMINAL_H
-#define TERMINAL_H
+#ifndef NANOLIKE_H
+#define NANOLIKE_H
 
 void crash(const char *message);
 
