@@ -4,6 +4,13 @@
 #include <stdio.h>
 #include <errno.h>
 
+#define CTRL_KEY(k) ((k) & 0x1f)
+
+
+//
+//
+//
+//
 
 struct termios orig_termios;
 
@@ -11,6 +18,11 @@ void crash(const char *message){
         perror(message);
         exit(1);
 }
+
+//
+//	Function to Disable and Enable the Raw mode
+//
+
 
 void disableRawMode() {
         if ( tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1 ) crash("tcsetattr");
@@ -33,4 +45,28 @@ void enableRawMode(){
         raw->c_cc[VTIME] = 1;
         if ( tcsetattr(STDIN_FILENO, TCSAFLUSH, raw) == -1 ) crash("tcsetattr");
         //free(raw);
+}
+
+//
+//	Function for reading the input Key
+//
+char readKey() {
+        int kread;
+        char c;
+        while( (kread = read(STDIN_FILENO, &c, 1)) !=1 ) {
+                if (kread == -1 && errno != EAGAIN) crash("read");
+        }
+        return c;
+}
+
+
+void executeKey() {
+        char c = readKey();
+
+        switch (c) {
+                case CTRL_KEY('x'):
+                        disableRawMode();
+                        exit(0);
+                        break;
+        }
 }

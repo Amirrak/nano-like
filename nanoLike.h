@@ -7,4 +7,7 @@ void disableRawMode();
 
 void enableRawMode();
 
+char readKey();
+
+void executeKey();
 #endif
